@@ -1,0 +1,550 @@
+/* --- Reset e Estrutura Geral --- */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+    background-color: #000;
+}
+
+/* --- Vídeo de Fundo --- */
+#bg-video {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    object-fit: cover;
+    filter: brightness(0.6) blur(5px);
+    transition: opacity 0.8s ease;
+	pointer-events: none;
+    will-change: opacity, transform;
+}
+
+/* --- Container Principal (Glass) --- */
+.glass-container {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 60px;
+    padding: 60px 80px;
+    text-align: center;
+    backdrop-filter: blur(15px);
+}
+
+/* --- Temporizador --- */
+#timer {
+    color: #ffffff;
+    font-size: 11rem;
+    font-weight: 200;
+    letter-spacing: -5px;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 10px;
+    text-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Barra de Tempo --- */
+#timeSlider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    margin: 40px 0;
+    outline: none;
+}
+
+#timeSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #2ecc71;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 0 15px #2ecc71;
+}
+
+/* --- Botões de Controle --- */
+.controls {
+    display: flex;
+    gap: 30px;
+    justify-content: center;
+}
+
+.btn {
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    cursor: pointer;
+    padding: 10px 15px;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 1px;
+    bottom: 0;
+    left: 50%;
+    background: #fff;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.btn:hover { 
+    color: #ffffff; 
+}
+.btn:hover::after { 
+    width: 60%; 
+}
+
+.btn.start { 
+    color: #2ecc71; 
+    font-weight: 600; 
+}
+.btn.start::after { 
+    background: #2ecc71; 
+}
+.btn.start:hover { 
+    text-shadow: 0 0 10px rgba(46, 204, 113, 0.5); 
+}
+
+/* --- Setas de Navegação --- */
+.nav-arrow {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.2);
+    font-size: 2.5rem;
+    cursor: pointer;
+    transition: 0.3s;
+    z-index: 10;
+}
+
+.nav-arrow:hover {
+    color: #2ecc71;
+    transform: translateY(-50%) scale(1.2);
+}
+
+.left { left: 30px; }
+.right { right: 30px; }
+
+/* --- Barra Superior e Música --- */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+    z-index: 100;
+}
+
+.music-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.btn-upload {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.6rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+}
+
+.btn-upload:hover { 
+    background: rgba(255, 255, 255, 0.2); 
+    color: #2ecc71;
+}
+
+.music-nav-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    opacity: 0.7;
+    transition: 0.3s;
+}
+
+.music-nav-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+.music-nav-btn svg {
+    fill: white;
+    transition: 0.2s ease;
+}
+
+.music-nav-btn:hover svg {
+    fill: #2ecc71;
+    transform: scale(1.15);
+}
+
+#music-name {
+    font-weight: 500;
+    opacity: 0.8;
+    margin-right: 8px;
+    font-size: 0.7rem;
+}
+
+/* --- Ondas Sonoras --- */
+.sound-wave {
+    display: flex;
+    align-items: flex-end;
+    gap: 4px;
+    height: 40px;
+}
+
+.sound-wave span {
+    display: block;
+    width: 3px;
+    height: 6px;
+    background: #2ecc71;
+    border-radius: 3px;
+    transition: opacity 0.3s ease;
+    will-change: height;
+}
+
+/* --- Player Controls adicionais --- */
+.player-controls, .music-btns-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.play-circle {
+    border: 1.5px solid white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.player-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+}
+.footer-links {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+    background: rgba(255, 255, 255, 0.05); /* Fundo bem sutil */
+    backdrop-filter: blur(5px);
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-links a {
+    color: rgba(255, 255, 255, 0.6); /* Texto discreto */
+    text-decoration: none;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: #fff; /* Brilha ao passar o mouse */
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+/* Estilo da Página de Privacidade */
+.privacy-body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    color: white;
+}
+
+.privacy-wrapper {
+    text-align: center;
+    z-index: 10;
+    width: 90%;
+    max-width: 700px;
+    padding: 20px;
+}
+
+.privacy-title {
+    font-size: 3.5rem;
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.update-date {
+    opacity: 0.8;
+    margin-bottom: 30px;
+    font-size: 0.9rem;
+}
+
+.privacy-glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 40px;
+    padding: 45px;
+    text-align: left;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+}
+
+.privacy-glass-card .section {
+    margin-bottom: 25px;
+}
+
+/* Cor Verde nos Títulos como na imagem */
+.privacy-glass-card h3 {
+    color: #4ade80; 
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+}
+
+.privacy-glass-card p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    font-size: 0.95rem;
+}
+
+.privacy-glass-card ul {
+    list-style: none;
+    padding: 0;
+}
+
+.privacy-glass-card ul li {
+    font-size: 0.85rem;
+    margin-top: 8px;
+    opacity: 0.9;
+}
+
+.privacy-glass-card a {
+    color: #4ade80;
+    text-decoration: underline;
+}
+
+/* Botão de Voltar */
+.back-link {
+    display: inline-block;
+    margin-top: 30px;
+    padding: 12px 35px;
+    background: transparent;
+    border: 2px solid white;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.back-link:hover {
+    background: white;
+    color: black;
+}
+/* Força a página de privacidade a permitir rolagem e limpa o conflito com o timer */
+.privacy-body {
+    margin: 0;
+    padding: 0;
+    display: block !important; /* Sobrescreve o flex do timer */
+    overflow-y: auto !important; /* Garante que a rolagem vertical apareça */
+    overflow-x: hidden;
+    font-family: 'Inter', sans-serif;
+    color: white;
+    min-height: 100vh;
+    width: 100%;
+}
+
+/* Ajusta o espaçamento para o botão não sumir no fundo */
+.privacy-wrapper {
+    position: relative;
+    margin: 0 auto;
+    padding: 80px 20px 100px 20px; /* Aumentei o padding inferior (100px) */
+    z-index: 10;
+    width: 95%;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o título e o botão */
+}
+
+/* Garante que o botão de voltar seja visível e clicável */
+.back-link {
+    display: inline-block;
+    margin-top: 50px; /* Mais espaço depois do cartão */
+    padding: 15px 40px;
+    background: rgba(255, 255, 255, 0.1); /* Um leve fundo para não sumir na imagem */
+    backdrop-filter: blur(5px);
+    border: 2px solid #ffffff;
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+}
+
+.back-link:hover {
+    background: white;
+    color: black;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+/* Grid de opções */
+.checkbox-group {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px;
+    margin: 15px 0 25px 0;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.checkbox-item:hover {
+    background: rgba(74, 222, 128, 0.08);
+    border-color: #4ade80;
+}
+
+.checkbox-item input {
+    accent-color: #4ade80;
+    width: 17px;
+    height: 17px;
+}
+
+.checkbox-item span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Área de Texto Estilo Profissional */
+.other-section textarea {
+    width: 100%;
+    min-height: 120px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 15px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    resize: vertical;
+    outline: none;
+    transition: 0.3s;
+}
+
+.other-section textarea:focus {
+    border-color: #4ade80;
+    background: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 15px rgba(74, 222, 128, 0.1);
+}
+.ad-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    width: 320px;
+    background: rgba(0,0,0,0.4);
+    backdrop-filter: blur(15px);
+    border-radius: 15px;
+    border: 1px solid rgba(255,255,255,0.1);
+    overflow: hidden;
+    z-index: 9999;
+    transition: all 0.4s ease;
+}
+
+.ad-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.7);
+}
+
+.ad-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.ad-body {
+    padding: 15px;
+}
+
+.ad-placeholder {
+    height: 100px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+}
+
+/* minimizado */
+.ad-minimized {
+    height: 40px;
+    width: 120px;
+}
+.ad-body {
+    min-height: 250px; /* Garante que o espaço não "suma" */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
