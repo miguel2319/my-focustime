@@ -3,18 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FocusTime </title>
+    
+    <title>My Focus Time | Minimalist Pomodoro & Local Music Player</title>
+    <meta name="description" content="A minimalist study tool with animated backgrounds and a private local audio uploader. Enjoy your own music while you focus—files stay strictly on your machine.">
+    <meta name="robots" content="index, follow">
+
+    <meta property="og:title" content="My Focus Time | Pomodoro & Local Music Player">
+    <meta property="og:description" content="A minimalist study tool with animated backgrounds and a private local audio uploader.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://my-focustime.netlify.app">
+    <meta property="og:image" content="https://my-focustime.netlify.app/favicon.png">
+
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/png" href="favicon.png">
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6611535234405901"
-     crossorigin="anonymous"></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6611535234405901" crossorigin="anonymous"></script>
 </head>
 <body>
 
     <button class="nav-arrow left" onclick="prevBackground()"> &#8592; </button>
     <button class="nav-arrow right" onclick="nextBackground()"> &#8594; </button>
-    <video autoplay muted loop id="bg-video" preload="none">
+    
+    <video autoplay muted loop id="bg-video" preload="auto">
         <source src="videos/01.mp4" type="video/mp4">
     </video>
 
@@ -58,27 +69,25 @@
         <a href="privacy.html">Privacy</a>
         <a href="feedback.html">Feedback</a>
     </div>
-	<div id="ad-container" class="ad-container">
-    
-    <div class="ad-header">
-        <span>Sponsored</span>
-        <button onclick="minimizeAd()" id="ad-min-btn">–</button>
+
+    <div id="ad-container" class="ad-container">
+        <div class="ad-header">
+            <span>Sponsored</span>
+            <button onclick="minimizeAd()" id="ad-min-btn">–</button>
+        </div>
+
+        <div class="ad-body">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-6611535234405901"
+                 data-ad-slot="5949874094"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
     </div>
-
-   <div class="ad-body">
-    
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-6611535234405901"
-         data-ad-slot="5949874094"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
-    <script>
-         (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-</div>
-
-</div>
 
     <script src="script.js"></script>
 </body>
