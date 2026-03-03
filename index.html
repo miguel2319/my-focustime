@@ -2,9 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>My Focustime | Minimalist Pomodoro & Local Music Player</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <title>My Focustime | Pomodoro & Local Music Player</title>
     <meta name="description" content="A minimalist study tool with animated backgrounds and a private local audio uploader. Enjoy your own music while you focus—files stay strictly on your machine.">
     <meta name="robots" content="index, follow">
 
@@ -14,68 +18,560 @@
     <meta property="og:url" content="https://my-focustime.netlify.app">
     <meta property="og:image" content="https://my-focustime.netlify.app/favicon.png">
 
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;900&display=swap" rel="stylesheet">
+    <!-- Preconnect para Google Fonts (performance) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700;900&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="style.css">
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="favicon.svg">
 
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6611535234405901" crossorigin="anonymous"></script>
+
+    <style>
+        html { scroll-behavior: smooth; }
+
+        body {
+            height: auto;
+            min-height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        /* Hero ocupa 100vh */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        /* ===== INFO SECTION ===== */
+        .info-section {
+            background: #fff;
+            color: #2d2d2d;
+            padding: 80px 24px 60px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .info-inner {
+            max-width: 860px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.68rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: #2ecc71;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .info-section h2 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            color: #111;
+            line-height: 1.15;
+            margin-bottom: 16px;
+        }
+
+        .info-section h2 span { color: #2ecc71; }
+
+        .green-bar {
+            width: 44px;
+            height: 4px;
+            background: #2ecc71;
+            border-radius: 2px;
+            margin: 0 0 24px;
+        }
+
+        .lead {
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.8;
+            max-width: 680px;
+            margin-bottom: 60px;
+        }
+
+        /* ===== FEATURE CARDS ===== */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 80px;
+        }
+
+        .feat-card {
+            background: #f6faf7;
+            border: 1px solid #e2f0e8;
+            border-radius: 18px;
+            padding: 28px 24px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .feat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(46,204,113,0.12);
+        }
+
+        .feat-icon { font-size: 1.8rem; margin-bottom: 14px; display: block; }
+        .feat-card h3 { font-size: 1rem; font-weight: 800; color: #111; margin-bottom: 10px; }
+        .feat-card p { font-size: 0.87rem; color: #666; line-height: 1.7; }
+
+        /* ===== HOW IT WORKS ===== */
+        .how-block { margin-bottom: 80px; }
+
+        .steps { display: flex; flex-direction: column; gap: 26px; margin-top: 36px; }
+
+        .step { display: flex; gap: 20px; align-items: flex-start; }
+
+        .step-num {
+            min-width: 42px;
+            height: 42px;
+            background: #2ecc71;
+            color: #fff;
+            font-weight: 900;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 1rem;
+            box-shadow: 0 4px 14px rgba(46,204,113,0.3);
+        }
+
+        .step-body h4 { font-size: 1rem; font-weight: 700; color: #111; margin-bottom: 5px; }
+        .step-body p { font-size: 0.88rem; color: #666; line-height: 1.7; }
+
+        /* ===== POMODORO ===== */
+        .pomodoro-block {
+            background: #f6faf7;
+            border: 1px solid #e2f0e8;
+            border-radius: 24px;
+            padding: 44px 40px;
+            margin-bottom: 80px;
+        }
+
+        .pomodoro-block h2 { font-size: 1.8rem; font-weight: 900; color: #111; margin-bottom: 10px; }
+        .pomodoro-block p { font-size: 0.93rem; color: #555; line-height: 1.8; margin-bottom: 14px; }
+        .pomodoro-block p:last-of-type { margin-bottom: 0; }
+
+        .pomodoro-cycles { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 26px; }
+
+        .cycle-chip {
+            background: #fff;
+            border: 1.5px solid #c8ecd5;
+            border-radius: 50px;
+            padding: 9px 18px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #1a7a3c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cycle-chip span {
+            background: #2ecc71;
+            color: #fff;
+            border-radius: 50px;
+            padding: 2px 9px;
+            font-size: 0.73rem;
+        }
+
+        /* ===== FAQ ===== */
+        .faq-block { margin-bottom: 80px; }
+
+        .faq-list { display: flex; flex-direction: column; gap: 12px; margin-top: 36px; }
+
+        .faq-item { border: 1px solid #e8e8e8; border-radius: 14px; overflow: hidden; }
+
+        .faq-q {
+            width: 100%;
+            background: none;
+            border: none;
+            padding: 18px 22px;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.93rem;
+            font-weight: 700;
+            color: #111;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.2s;
+            touch-action: manipulation;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .faq-q:hover { background: #f6faf7; }
+
+        .faq-q .arrow {
+            font-size: 1.1rem;
+            color: #2ecc71;
+            transition: transform 0.3s;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+
+        .faq-a {
+            display: none;
+            padding: 0 22px 18px;
+            font-size: 0.87rem;
+            color: #666;
+            line-height: 1.75;
+        }
+
+        .faq-item.open .faq-a { display: block; }
+        .faq-item.open .arrow { transform: rotate(180deg); }
+
+        /* ===== CTA ===== */
+        .cta-block {
+            background: linear-gradient(135deg, #111 0%, #1e1e1e 100%);
+            border-radius: 24px;
+            padding: 46px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .cta-block h3 { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 6px; }
+        .cta-block p { font-size: 0.88rem; color: rgba(255,255,255,0.5); }
+
+        .cta-btn {
+            background: #2ecc71;
+            color: #fff;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 50px;
+            font-size: 0.83rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: background 0.2s, transform 0.2s;
+            touch-action: manipulation;
+        }
+
+        .cta-btn:hover { background: #27ae60; transform: scale(1.04); }
+
+        /* ===== INFO FOOTER ===== */
+        .info-footer {
+            padding-top: 26px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .info-footer p { font-size: 0.77rem; color: #bbb; }
+        .info-footer-links { display: flex; gap: 18px; }
+
+        .info-footer-links a {
+            font-size: 0.77rem;
+            color: #bbb;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .info-footer-links a:hover { color: #2ecc71; }
+
+        /* ===== SCROLL HINT ===== */
+        .scroll-hint {
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: rgba(255,255,255,0.3);
+            font-size: 0.58rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            animation: scrollBounce 2s ease-in-out infinite;
+            cursor: pointer;
+            z-index: 5;
+            touch-action: manipulation;
+        }
+
+        @keyframes scrollBounce {
+            0%, 100% { opacity: 0.4; transform: translateX(-50%) translateY(0); }
+            50% { opacity: 0.85; transform: translateX(-50%) translateY(7px); }
+        }
+
+        /* ===== RESPONSIVE INFO SECTION ===== */
+        @media (max-width: 768px) {
+            .info-section { padding: 60px 20px 48px; }
+            .info-section h2 { font-size: 1.8rem; }
+            .lead { font-size: 0.94rem; margin-bottom: 40px; }
+            .features-grid { grid-template-columns: 1fr; gap: 14px; margin-bottom: 56px; }
+            .pomodoro-block { padding: 28px 20px; margin-bottom: 56px; }
+            .pomodoro-block h2 { font-size: 1.4rem; }
+            .cta-block { padding: 30px 22px; flex-direction: column; align-items: flex-start; }
+            .cta-block h3 { font-size: 1.2rem; }
+            .how-block { margin-bottom: 56px; }
+            .faq-block { margin-bottom: 56px; }
+        }
+
+        @media (max-width: 420px) {
+            .info-section h2 { font-size: 1.5rem; }
+            .pomodoro-cycles { gap: 8px; }
+            .cycle-chip { font-size: 0.74rem; padding: 7px 13px; }
+        }
+    </style>
 </head>
 <body>
 
-    <button class="nav-arrow left" onclick="prevBackground()"> &#8592; </button>
-    <button class="nav-arrow right" onclick="nextBackground()"> &#8594; </button>
-    
-    <video autoplay muted loop id="bg-video" preload="auto">
-        <source src="videos/01.mp4" type="video/mp4">
-    </video>
+    <!-- ===== HERO (Timer) ===== -->
+    <div class="hero-section">
 
-    <audio id="bg-music" loop preload="none">
-        <source src="musicas/lofi.mp3" type="audio/mpeg">
-    </audio>
+        <button class="nav-arrow left" onclick="prevBackground()" aria-label="Previous background">&#8592;</button>
+        <button class="nav-arrow right" onclick="nextBackground()" aria-label="Next background">&#8594;</button>
 
-    <div class="top-bar">
-        <div class="music-info">
-            <span id="music-name">LOFI.MP3</span>
-            <input type="file" id="music-upload" accept="audio/*" style="display:none" onchange="handleCustomMusic(event)">
-            <button class="btn-upload" onclick="document.getElementById('music-upload').click()">ADD MUSIC</button>
-            <button class="music-nav-btn" onclick="prevMusic()">
-                <svg viewBox="0 0 24 24" width="24" height="24"><polygon points="19,4 9,12 19,20"></polygon><rect x="5" y="4" width="2" height="16"></rect></svg>
-            </button>
-            <button class="music-nav-btn" onclick="toggleMusic()">
-                <svg id="playIcon" viewBox="0 0 24 24" width="24" height="24"><polygon points="6,4 20,12 6,20"></polygon></svg>
-                <svg id="pauseIcon" viewBox="0 0 24 24" width="24" height="24" style="display:none"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-            </button>
-            <button class="music-nav-btn" onclick="nextMusic()">
-                <svg viewBox="0 0 24 24" width="24" height="24"><polygon points="5,4 15,12 5,20"></polygon><rect x="17" y="4" width="2" height="16"></rect></svg>
-            </button>
+        <!-- Vídeo gerenciado pelo script.js (lazy) -->
+        <audio id="bg-music" loop preload="none">
+            <source src="musicas/lofi.mp3" type="audio/mpeg">
+        </audio>
+
+        <div class="top-bar">
+            <div class="music-info">
+                <span id="music-name">LOFI.MP3</span>
+                <input type="file" id="music-upload" accept="audio/*" style="display:none" onchange="handleCustomMusic(event)">
+                <button class="btn-upload" onclick="document.getElementById('music-upload').click()" aria-label="Upload music">ADD MUSIC</button>
+                <button class="music-nav-btn" onclick="prevMusic()" aria-label="Previous track">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><polygon points="19,4 9,12 19,20"></polygon><rect x="5" y="4" width="2" height="16"></rect></svg>
+                </button>
+                <button class="music-nav-btn" onclick="toggleMusic()" aria-label="Play/Pause">
+                    <svg id="playIcon" viewBox="0 0 24 24" width="22" height="22"><polygon points="6,4 20,12 6,20"></polygon></svg>
+                    <svg id="pauseIcon" viewBox="0 0 24 24" width="22" height="22" style="display:none"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                </button>
+                <button class="music-nav-btn" onclick="nextMusic()" aria-label="Next track">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><polygon points="5,4 15,12 5,20"></polygon><rect x="17" y="4" width="2" height="16"></rect></svg>
+                </button>
+            </div>
+            <div class="sound-wave" id="wave" aria-hidden="true">
+                <span></span><span></span><span></span><span></span><span></span>
+            </div>
         </div>
-        <div class="sound-wave" id="wave">
-            <span></span><span></span><span></span><span></span><span></span>
+
+        <div class="glass-container">
+            <div id="timer" aria-live="polite">00:00:00</div>
+            <input type="range" id="timeSlider" min="0" max="300" value="0" step="any"
+                aria-label="Set focus duration"
+                style="cursor:pointer;position:relative;z-index:10;">
+            <div class="controls">
+                <button class="btn start" onclick="startTimer()">START</button>
+                <button class="btn pause" onclick="pauseTimer()">PAUSE</button>
+                <button class="btn reset" onclick="resetTimer()">RESET</button>
+            </div>
+        </div>
+
+        <div class="footer-links">
+            <a href="about.html">About</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="feedback.html">Feedback</a>
+        </div>
+
+        <div class="scroll-hint" onclick="document.querySelector('.info-section').scrollIntoView({behavior:'smooth'})" role="button" aria-label="Scroll down for more info">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            learn more
+        </div>
+
+    </div>
+    <!-- ===== END HERO ===== -->
+
+
+    <!-- ===== INFO SECTION ===== -->
+    <div class="info-section">
+        <div class="info-inner">
+
+            <span class="section-label">Focus Timer & Music Player</span>
+            <h2>An online tool to help you<br><span>study, work, and stay in flow</span></h2>
+            <div class="green-bar"></div>
+            <p class="lead">
+                My Focustime is a free, browser-based productivity tool that combines a precision focus timer with beautiful ambient video backgrounds and a private local music player. Whether you're studying for an exam, writing code, or working through a creative project, My Focustime gives you a distraction-free environment designed to help you stay in deep concentration for longer.
+            </p>
+
+            <!-- Feature Cards -->
+            <div class="features-grid">
+                <div class="feat-card">
+                    <span class="feat-icon">⏱️</span>
+                    <h3>Precision Countdown Timer</h3>
+                    <p>Set any duration up to 5 hours using the interactive slider. The timer counts down with second-level accuracy and displays your remaining time in HH:MM:SS format. Once your session ends, the display shows "Finished" so you always know when to take a break.</p>
+                </div>
+                <div class="feat-card">
+                    <span class="feat-icon">🎵</span>
+                    <h3>Private Local Music Player</h3>
+                    <p>Upload your own MP3, WAV, or any audio file directly from your device. My Focustime comes pre-loaded with a built-in lofi track and a piano ambient. All files are processed entirely in your browser — nothing is ever uploaded to any server.</p>
+                </div>
+                <div class="feat-card">
+                    <span class="feat-icon">🌿</span>
+                    <h3>7 Ambient Video Backgrounds</h3>
+                    <p>Choose from 7 looping video backgrounds including forest scenes and nature landscapes. Each video loads on demand with a smooth fade transition so you can change your atmosphere without breaking your focus.</p>
+                </div>
+                <div class="feat-card">
+                    <span class="feat-icon">🔒</span>
+                    <h3>100% Private — No Account Needed</h3>
+                    <p>My Focustime requires no sign-up, no login, and no personal data. Your music files stay strictly on your machine. There is no tracking of your sessions and no data sent to third-party services.</p>
+                </div>
+                <div class="feat-card">
+                    <span class="feat-icon">🎧</span>
+                    <h3>Animated Sound Wave Visualizer</h3>
+                    <p>While your music plays, a real-time animated sound wave responds to the audio playback state, giving you a visual cue that your music is active. The animation smoothly transitions when you pause or resume tracks.</p>
+                </div>
+                <div class="feat-card">
+                    <span class="feat-icon">⚡</span>
+                    <h3>Works Instantly — No Install</h3>
+                    <p>My Focustime loads fast and requires no installation. Open it in any modern browser on desktop or mobile and you're ready to go. Video backgrounds load lazily so they never slow down the initial page load.</p>
+                </div>
+            </div>
+
+            <!-- How It Works -->
+            <div class="how-block">
+                <span class="section-label">Getting Started</span>
+                <h2>How to use My Focustime</h2>
+                <div class="green-bar"></div>
+                <p style="font-size:0.93rem;color:#666;line-height:1.8;max-width:640px;">
+                    Getting started takes less than 10 seconds. There's nothing to install or configure — just open the page and follow these steps to begin your first focus session.
+                </p>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <div class="step-body">
+                            <h4>Set your focus duration with the slider</h4>
+                            <p>Drag the green slider underneath the timer to set how long you want to focus. The slider supports durations from 1 minute up to 5 hours. The timer display updates live as you drag.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <div class="step-body">
+                            <h4>Press START to begin your session</h4>
+                            <p>Hit START to begin counting down. The slider locks during an active session. You can pause at any moment and resume right where you left off — the timer uses precise timestamp-based tracking so it stays accurate even if your tab runs in the background.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <div class="step-body">
+                            <h4>Pick your background scene</h4>
+                            <p>Use the arrow buttons on the sides of the screen to cycle through the 7 ambient video backgrounds. Each transition uses a smooth fade. All videos loop seamlessly with no jarring cuts.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">4</div>
+                        <div class="step-body">
+                            <h4>Play music or upload your own tracks</h4>
+                            <p>Use the play/pause button in the top bar to start the built-in lofi or piano ambient tracks. Click <strong>ADD MUSIC</strong> to upload any audio file from your device — it's added to the playlist instantly and starts playing right away.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">5</div>
+                        <div class="step-body">
+                            <h4>Take a break when the timer finishes</h4>
+                            <p>When your session ends, the display shows "Finished." Step away, rest your eyes, and stretch. Then come back, hit RESET, and start your next session refreshed.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pomodoro Explainer -->
+            <div class="pomodoro-block">
+                <span class="section-label">Productivity Method</span>
+                <h2>What is the Pomodoro Technique?</h2>
+                <div class="green-bar"></div>
+                <p>The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. The core idea is simple: break your work into focused intervals — traditionally 25 minutes long — separated by short breaks. Each interval is called a "pomodoro" (Italian for tomato, after the kitchen timer Cirillo used as a student).</p>
+                <p>After four consecutive pomodoros, you take a longer break of 15 to 30 minutes. This rhythm trains your brain to focus intensely for short bursts while protecting against mental fatigue. Regular breaks improve both focus and retention, and switching off briefly boosts creative problem-solving when you return.</p>
+                <p>My Focustime is flexible — you don't have to follow the strict 25-minute rule. Many people prefer 50-minute deep work blocks with 10-minute breaks, or 90-minute sessions aligned with the brain's natural ultradian rhythm. Use the slider to set whatever interval works best for you.</p>
+                <div class="pomodoro-cycles">
+                    <div class="cycle-chip">🍅 Classic Pomodoro <span>25 min</span></div>
+                    <div class="cycle-chip">🧠 Deep Work Block <span>50 min</span></div>
+                    <div class="cycle-chip">⚡ Ultradian Cycle <span>90 min</span></div>
+                    <div class="cycle-chip">☕ Short Break <span>5–10 min</span></div>
+                    <div class="cycle-chip">🛋️ Long Break <span>15–30 min</span></div>
+                </div>
+            </div>
+
+            <!-- FAQ -->
+            <div class="faq-block">
+                <span class="section-label">FAQ</span>
+                <h2>Frequently Asked Questions</h2>
+                <div class="green-bar"></div>
+                <div class="faq-list">
+                    <div class="faq-item">
+                        <button class="faq-q" onclick="toggleFaq(this)">Is My Focustime completely free?<span class="arrow">&#8964;</span></button>
+                        <div class="faq-a">Yes, My Focustime is completely free to use. There are no premium tiers, no paywalled features, and no subscription required. The site is supported by non-intrusive ads that can be minimized at any time.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" onclick="toggleFaq(this)">Does my uploaded music get sent to any server?<span class="arrow">&#8964;</span></button>
+                        <div class="faq-a">No. When you select a file, the browser creates a temporary local URL using the Web File API. The audio is played entirely within your browser tab. Your files never leave your device and are never uploaded anywhere.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" onclick="toggleFaq(this)">Will the timer stay accurate if I switch tabs?<span class="arrow">&#8964;</span></button>
+                        <div class="faq-a">Yes. My Focustime uses timestamp-based countdown logic rather than simple interval counting. Every tick records the actual system time and calculates the elapsed delta, so the timer stays accurate even if your browser throttles background tabs.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" onclick="toggleFaq(this)">What audio formats are supported?<span class="arrow">&#8964;</span></button>
+                        <div class="faq-a">My Focustime accepts any audio format your browser supports, typically MP3, WAV, OGG, AAC, FLAC, and M4A. MP3 is the most universally compatible and recommended for best results.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" onclick="toggleFaq(this)">Can I use My Focustime on my phone?<span class="arrow">&#8964;</span></button>
+                        <div class="faq-a">Yes. My Focustime is fully responsive and works on mobile browsers. The timer, music controls, and background navigation all work on touchscreen devices. For the best experience we recommend a desktop or laptop.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" onclick="toggleFaq(this)">How many background videos are available?<span class="arrow">&#8964;</span></button>
+                        <div class="faq-a">There are currently 7 ambient looping video backgrounds available. They load on demand so only the current video uses your bandwidth. Switching between them is instant with a smooth crossfade.</div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-q" onclick="toggleFaq(this)">Do I need to create an account?<span class="arrow">&#8964;</span></button>
+                        <div class="faq-a">No account is needed. My Focustime runs entirely in your browser with no login, no sign-up, and no personal data collected. Just open the site and start focusing immediately.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA -->
+            <div class="cta-block">
+                <div>
+                    <h3>Ready to focus?</h3>
+                    <p>Scroll back up, set your timer, and start your session now.</p>
+                </div>
+                <a class="cta-btn" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">Start Focusing ↑</a>
+            </div>
+
+            <!-- Footer -->
+            <div class="info-footer">
+                <p>© 2025 My Focustime. Built for deep work.</p>
+                <div class="info-footer-links">
+                    <a href="about.html">About</a>
+                    <a href="privacy.html">Privacy</a>
+                    <a href="feedback.html">Feedback</a>
+                </div>
+            </div>
+
         </div>
     </div>
-
-    <div class="glass-container">
-        <div id="timer">00:00:00</div>
-        <input type="range" id="timeSlider" min="0" max="300" value="0" step="any" style="cursor: pointer; position: relative; z-index: 10;">
-        <div class="controls">
-            <button class="btn start" onclick="startTimer()">START</button>
-            <button class="btn pause" onclick="pauseTimer()">PAUSE</button>
-            <button class="btn reset" onclick="resetTimer()">RESET</button>
-        </div>
-    </div>
-
-    <div class="footer-links">
-        <a href="about.html">About</a>
-        <a href="privacy.html">Privacy</a>
-        <a href="feedback.html">Feedback</a>
-    </div>
+    <!-- ===== END INFO ===== -->
 
     <div id="ad-container" class="ad-container">
         <div class="ad-header">
             <span>Sponsored</span>
-            <button onclick="minimizeAd()" id="ad-min-btn">–</button>
+            <button onclick="minimizeAd()" id="ad-min-btn" aria-label="Minimize ad">–</button>
         </div>
-
         <div class="ad-body">
             <ins class="adsbygoogle"
                  style="display:block"
@@ -83,13 +579,15 @@
                  data-ad-slot="5949874094"
                  data-ad-format="auto"
                  data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
+            <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
         </div>
     </div>
 
     <script src="script.js"></script>
+    <script>
+        function toggleFaq(btn) {
+            btn.parentElement.classList.toggle('open');
+        }
+    </script>
 </body>
 </html>
-
